@@ -13,4 +13,7 @@ shotty uses the configuration file created by the ASW cli. e.g.
 
 ## running
 
-'pipenv run "python shotty/shotty.py"'
+'pipenv run "python shotty/shotty.py <command> <--project=PROJECT>"'
+
+*command* is list, start, or stop
+*project* is option
