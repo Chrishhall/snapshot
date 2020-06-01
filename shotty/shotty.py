@@ -76,12 +76,22 @@ def instances():
     help="Only instance for project (tag Project=<name>)")
 
 def create_snapshots(project):
-    instance  = filter_instances(project)
+    "Create Snapshot for each instance"
+    instances  = filter_instances(project)
 
     for i in instances:
+        print("Stopping {0}".format(i.id))
+        i.stop()
+        i.wait_until_stopped()
+        print("{0} Instance stopped".format(i.id))
         for v in i.volumes.all():
             print("Creating snapshot of {0}".format(v.id))
-            v.create_snapshots(Description="Created by Snappy")
+            v.create_snapshot(Description="Created by Snappy")
+        print("Starting {0}".format(i.id))
+        i.start()
+        i.wait_until_running()
+        print("{0} Instance started".format(i.id))
+    print("Job Done!")
     return
 
 @instances.command('list')
